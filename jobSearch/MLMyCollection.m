@@ -168,7 +168,8 @@ static  MLMyCollection *thisVC=nil;
     [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
     _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
     
-    [self headRefreshData];}
+    [self headRefreshData];
+}
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

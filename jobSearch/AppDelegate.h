@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "baseAPP.h"
+#import "netAPI.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

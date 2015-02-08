@@ -67,7 +67,7 @@
     
     
     
-    
+    [netAPI test];
     return YES;
 }
 
