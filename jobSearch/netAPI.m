@@ -28,13 +28,34 @@
 
 @implementation netAPI
 +(void)test{
-    //ok
-    [netAPI getNearByJobs:@"54ceddc6910d78bb68004293" longtitude:116.46 latitude:49.92 start:1 length:2 withBlock:^(jobListModel *jobListModel) {
-        NSMutableArray *a = [jobListModel getJobArray];
-        for (jobModel *job in a) {
-            NSLog(@"getNearByJobs jobid = %@",[job getjobID]);
-        }
+    //20150208test
+//    //ok
+//    [netAPI usrRegister:@"18610782216" usrPassword:@"123456" withBlock:^(registerModel *registerModel) {
+//        NSLog(@"register info= %@",[registerModel getInfo]);
+//        NSLog(@"register id= %@",[registerModel getUsrID]);
+//    }];
+//    //login ok
+//    [netAPI usrLogin:@"18610782216" usrPassword:@"123456" withBlock:^(loginModel *loginModel) {
+//        NSLog(@"usrLogin info= %@",[loginModel getInfo]);
+//        NSLog(@"usrLogin id = %@",[loginModel getUsrID]);
+//    }];
+    
+    [netAPI getSaveJobList:@"54d764c496d9ae46798b4568" start:1 length:2 withBlock:^(jobListModel *jobListModel) {
+        
     }];
+    
+    
+    
+//    //ok
+//    [netAPI getNearByJobs:@"54ceddc6910d78bb68004293" longtitude:123.45 latitude:45.67 start:1 length:2 withBlock:^(jobListModel *jobListModel) {
+//        NSLog(@"getNearByJobs info = %@",[jobListModel getInfo]);
+//        NSMutableArray *a = [jobListModel getJobArray];
+//        for (jobModel *job in a) {
+//            NSLog(@"getNearByJobs jobid = %@",[job getjobID]);
+//        }
+//    }];
+    
+    
 //    //ok
 //    [netAPI getJobByDistance:@"54ceddc6910d78bb68004293" longtitude:116.46 latitude:49.92 start:1 length:2 distance:2 withBlock:^(jobListModel *jobListModel) {
 //        NSMutableArray *a = [jobListModel getJobArray];
@@ -75,11 +96,8 @@
 //            NSLog(@"getApplyJobs title = %@",[job getjobTitle]);
 //        }
 //    }];
-//    [netAPI usrRegister:@"18610782216" usrPassword:@"123456" withBlock:^(registerModel *registerModel) {
-//        NSLog(@"register info= %@",[registerModel getInfo]);
-//        NSLog(@"register id= %@",[registerModel getUsrID]);
-//    }];
-//    [netAPI saveTheJob:@"54cdfe873ed1ccf5358b45d3" jobID:@"54cdee5b3ed1ccf5358b458a" withBlock:^(oprationResultModel *oprationResultModel) {
+
+//    [netAPI saveTheJob:@"54d7656696d9aecd6f8b4569" jobID:@"54cdee5b3ed1ccf5358b458a" withBlock:^(oprationResultModel *oprationResultModel) {
 //        NSLog(@"saveTheJob info= %@",[oprationResultModel getInfo]);
 //        NSLog(@"saveTheJob id= %@",[oprationResultModel getOprationID]);
 //    }];
