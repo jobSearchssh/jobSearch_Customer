@@ -38,6 +38,7 @@
 }
 
 -(void)registerIsSucceed:(BOOL)result feedback:(NSString*)feedback{
+    
     [self.registerResultDelegate registerResult:result Feedback:feedback];
 }
 

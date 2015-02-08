@@ -73,10 +73,10 @@ static  MLMyCollection *thisVC=nil;
     skipTimes=0;
     
     if (firstLoad){
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
     }
 
-    [netAPI getSaveJobList:@"54ceddc6910d78bb68004293" start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+    [netAPI getSaveJobList:@"54d3919296d9aeeb5a8b4567" start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
         [self headHandler:jobListModel];
     }];
 }
@@ -84,7 +84,7 @@ static  MLMyCollection *thisVC=nil;
 - (void)footRefreshData{
     footerRefreshing=YES;
     
-    [netAPI getSaveJobList:@"54ceddc6910d78bb68004293" start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+    [netAPI getSaveJobList:@"54d3919296d9aeeb5a8b4567" start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
         [self footHandler:jobListModel];
     }];
 }
@@ -94,7 +94,7 @@ static  MLMyCollection *thisVC=nil;
     
     skipTimes=1;
     if (firstLoad){
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:_tableView animated:YES];
         firstLoad=NO;
     }
     headerRefreshing=NO;

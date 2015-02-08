@@ -19,6 +19,7 @@
 #import <AMapSearchKit/AMapSearchAPI.h>
 #import <MAMapKit/MAMapKit.h>
 #import "AJLocationManager.h"
+#import <QiniuSDK.h>
 
 @interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate,finishFilterDelegate,UINavigationControllerDelegate>
 {
@@ -135,7 +136,7 @@ static  MLFirstVC *thisVC=nil;
     skipTimes=0;
     
     if (firstLoad){
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
     }
     [self refreshDataByType:NO];
 
@@ -215,7 +216,7 @@ static  MLFirstVC *thisVC=nil;
         if ([searchType isEqualToString:@"nearest"]) {
             if (abs(locationCoord.latitude-99999.99)<0.001) {
                 [self.tableView headerEndRefreshing];
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
                 firstLoad=NO;
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alert show];
@@ -236,7 +237,7 @@ static  MLFirstVC *thisVC=nil;
             if ([keyWord length]<1) {
                 firstLoad=NO;
                 [self.tableView headerEndRefreshing];
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入关键字" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alert show];
             }else{
@@ -251,7 +252,7 @@ static  MLFirstVC *thisVC=nil;
                 if (abs(locationCoord.latitude-99999.99)<0.001) {
                     firstLoad=NO;
                     [self.tableView headerEndRefreshing];
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                     [alert show];
                 }else{
@@ -269,7 +270,7 @@ static  MLFirstVC *thisVC=nil;
                 if (abs(locationCoord.latitude-99999.99)<0.001) {
                     firstLoad=NO;
                     [self.tableView headerEndRefreshing];
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                     [alert show];
                 }else{
@@ -297,7 +298,7 @@ static  MLFirstVC *thisVC=nil;
     
     skipTimes=1;
     if (firstLoad){
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
         firstLoad=NO;
     }
     headerRefreshing=NO;
@@ -620,7 +621,7 @@ static  MLFirstVC *thisVC=nil;
     detailVC.hidesBottomBarWhenPushed=YES;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"";
-    backItem.tintColor=[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:50.0/255.0 alpha:1.0];
+    //backItem.tintColor=[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:50.0/255.0 alpha:1.0];
     self.navigationItem.backBarButtonItem = backItem;
     
     [self.navigationController pushViewController:detailVC animated:YES];
@@ -718,7 +719,7 @@ static  MLFirstVC *thisVC=nil;
 
 - (void)searchCity
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
     NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
     
     //获得用户位置信息

@@ -48,7 +48,7 @@
         RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:@"未登录" setFlag:USRCELL setSubtitle:@"游客"  image:[UIImage imageNamed:@"tourists"] highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
             [menu hide];
             
-            MLLoginVC *viewController = [MLLoginVC sharedInstance];
+            MLLoginVC *viewController = [[MLLoginVC alloc] init];
             [currentnavigationController pushViewController:viewController animated:YES];
             
         }];

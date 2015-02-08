@@ -11,6 +11,7 @@
 #import "MBProgressHUD.h"
 #import "PopoverView.h"
 #import "freeselectViewCell.h"
+#import "netAPI.h"
 
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
@@ -25,6 +26,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     MLMapView *mapView;
     
 }
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *jobDescribleLabelHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *jobRequireLabelHeightConstraint;
@@ -64,6 +66,25 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self initData];
     [self timeCollectionViewInit];
 }
+
+- (IBAction)applyTheJob:(id)sender {
+    
+    NSLog(@"%@",self.jobModel.getjobID);
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [netAPI applyTheJob:@"54d3919296d9aeeb5a8b4567" jobID:[NSString stringWithFormat:@"%@",self.jobModel.getjobID] withBlock:^(oprationResultModel *oprationResultModel) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        if (![oprationResultModel.getStatus intValue]==0) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络请求失败" message:@"请检查您的网络是否畅通" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }
+        else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"申请成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
+}
+
 
 - (void)viewDidAppear:(BOOL)animated{
     
@@ -187,6 +208,20 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (void)saveJob{
     
+    NSLog(@"%@",self.jobModel.getjobID);
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [netAPI saveTheJob:@"54d3919296d9aeeb5a8b4567" jobID:self.jobModel.getjobID withBlock:^(oprationResultModel *oprationResultModel) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        if (![oprationResultModel.getStatus intValue]==0) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络请求失败" message:@"请检查您的网络是否畅通" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }
+        else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
 }
 
 - (IBAction)showWorkTime:(id)sender {

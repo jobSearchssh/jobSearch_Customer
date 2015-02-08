@@ -54,7 +54,6 @@ static  MLMyApplication *thisVC=nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     cellNum=0;
     sectionNum=0;
@@ -74,9 +73,10 @@ static  MLMyApplication *thisVC=nil;
     skipTimes=0;
     
     if (firstLoad){
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
+        firstLoad=NO;
     }
-    [netAPI getApplyJobs:@"54ceddc6910d78bb68004293" start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+    [netAPI getApplyJobs:@"54d3919296d9aeeb5a8b4567" start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
         [self headHandler:jobListModel];
     }];
 }
@@ -84,17 +84,16 @@ static  MLMyApplication *thisVC=nil;
 - (void)footRefreshData{
     footerRefreshing=YES;
     
-    [netAPI getApplyJobs:@"54ceddc6910d78bb68004293" start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+    [netAPI getApplyJobs:@"54d3919296d9aeeb5a8b4567" start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
         [self footHandler:jobListModel];
     }];
 }
 
 - (void)headHandler:(jobListModel *)jobListModel{
     [self refreshData:jobListModel];
-    
+    [MBProgressHUD hideHUDForView:_tableView animated:YES];
     skipTimes=1;
     if (firstLoad){
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
         firstLoad=NO;
     }
     headerRefreshing=NO;

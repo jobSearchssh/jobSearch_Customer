@@ -276,6 +276,7 @@
 		3BD4DCA71A77D40900B061D0 /* checkbox1_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DCA11A77D40900B061D0 /* checkbox1_unchecked@2x.png */; };
 		3BD4DCB61A77D88C00B061D0 /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DCB41A77D88C00B061D0 /* right.png */; };
 		3BD4DCB71A77D88C00B061D0 /* wrong.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DCB51A77D88C00B061D0 /* wrong.png */; };
+		AA5DFE932DAF522F4A875DDD /* libPods-jobSearch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA0F2E28DE7BCC870B9C5BB9 /* libPods-jobSearch.a */; };
 		B75CE4011A7B512B00974815 /* resume_female.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CE3FD1A7B512B00974815 /* resume_female.png */; };
 		B75CE4021A7B512B00974815 /* resume_male.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CE3FE1A7B512B00974815 /* resume_male.png */; };
 		B75CE4031A7B512B00974815 /* resume_phone.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CE3FF1A7B512B00974815 /* resume_phone.png */; };
@@ -670,6 +671,7 @@
 		3BD4DCA11A77D40900B061D0 /* checkbox1_unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox1_unchecked@2x.png"; sourceTree = "<group>"; };
 		3BD4DCB41A77D88C00B061D0 /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
 		3BD4DCB51A77D88C00B061D0 /* wrong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wrong.png; sourceTree = "<group>"; };
+		AC34B9081409EBBB9336D0E0 /* Pods-jobSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jobSearch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-jobSearch/Pods-jobSearch.debug.xcconfig"; sourceTree = "<group>"; };
 		B75CE3FD1A7B512B00974815 /* resume_female.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resume_female.png; sourceTree = "<group>"; };
 		B75CE3FE1A7B512B00974815 /* resume_male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resume_male.png; sourceTree = "<group>"; };
 		B75CE3FF1A7B512B00974815 /* resume_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resume_phone.png; sourceTree = "<group>"; };
@@ -698,6 +700,8 @@
 		B7D32BAA1A78E13800871277 /* stringUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = stringUtil.m; sourceTree = "<group>"; };
 		B7D32BAB1A78E13800871277 /* DateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateUtil.h; sourceTree = "<group>"; };
 		B7D32BAC1A78E13800871277 /* DateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtil.m; sourceTree = "<group>"; };
+		D52FED7E67CE4D93F0F7C6D2 /* Pods-jobSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jobSearch.release.xcconfig"; path = "Pods/Target Support Files/Pods-jobSearch/Pods-jobSearch.release.xcconfig"; sourceTree = "<group>"; };
+		FA0F2E28DE7BCC870B9C5BB9 /* libPods-jobSearch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-jobSearch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -731,6 +735,7 @@
 				3B3C0A071A68F75D00B8C343 /* Foundation.framework in Frameworks */,
 				3B3C0A031A68F74300B8C343 /* UIKit.framework in Frameworks */,
 				3B3C0A011A68F73700B8C343 /* QuartzCore.framework in Frameworks */,
+				AA5DFE932DAF522F4A875DDD /* libPods-jobSearch.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -973,6 +978,8 @@
 				3B3C09F61A68F61D00B8C343 /* Framework */,
 				3B92365F1A67FAFA00347D9C /* jobSearchTests */,
 				3B9236441A67FAFA00347D9C /* Products */,
+				96040B8FD956393AD2754CD8 /* Pods */,
+				7D60930D337DBDB9829A912F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1402,6 +1409,23 @@
 			path = resumeIIcon;
 			sourceTree = "<group>";
 		};
+		7D60930D337DBDB9829A912F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA0F2E28DE7BCC870B9C5BB9 /* libPods-jobSearch.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		96040B8FD956393AD2754CD8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AC34B9081409EBBB9336D0E0 /* Pods-jobSearch.debug.xcconfig */,
+				D52FED7E67CE4D93F0F7C6D2 /* Pods-jobSearch.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		B751EB901A7E127000A6361A /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1521,9 +1545,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3B9236661A67FAFA00347D9C /* Build configuration list for PBXNativeTarget "jobSearch" */;
 			buildPhases = (
+				4BA2F3106FC1430DAC5538A6 /* Check Pods Manifest.lock */,
 				3B92363F1A67FAFA00347D9C /* Sources */,
 				3B9236401A67FAFA00347D9C /* Frameworks */,
 				3B9236411A67FAFA00347D9C /* Resources */,
+				F6E93A697C7D5722290EFDC6 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1783,6 +1809,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4BA2F3106FC1430DAC5538A6 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F6E93A697C7D5722290EFDC6 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-jobSearch/Pods-jobSearch-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3B92363F1A67FAFA00347D9C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1994,6 +2053,7 @@
 		};
 		3B9236671A67FAFA00347D9C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AC34B9081409EBBB9336D0E0 /* Pods-jobSearch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2020,6 +2080,7 @@
 		};
 		3B9236681A67FAFA00347D9C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D52FED7E67CE4D93F0F7C6D2 /* Pods-jobSearch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
