@@ -72,7 +72,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSLog(@"%@",self.jobModel.getjobID);
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [netAPI applyTheJob:@"54d3919296d9aeeb5a8b4567" jobID:[NSString stringWithFormat:@"%@",self.jobModel.getjobID] withBlock:^(oprationResultModel *oprationResultModel) {
+    [netAPI applyTheJob:@"54d76bd496d9aece6f8b4568" jobID:@"54d76bd496d9aece6f8b4570" withBlock:^(oprationResultModel *oprationResultModel) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (![oprationResultModel.getStatus intValue]==0) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络请求失败" message:@"请检查您的网络是否畅通" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -179,7 +179,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         [self updateConstraints];
         
-        [mapView addAnnotation:self.jobModel.getjobWorkPlaceGeoPoint];
+        [mapView addAnnotation:self.jobModel.getjobWorkPlaceGeoPoint Title:self.jobModel.getjobTitle tag:0];
     }
 }
 
@@ -211,7 +211,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSLog(@"%@",self.jobModel.getjobID);
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [netAPI saveTheJob:@"54d3919296d9aeeb5a8b4567" jobID:self.jobModel.getjobID withBlock:^(oprationResultModel *oprationResultModel) {
+    [netAPI saveTheJob:@"54d76bd496d9aece6f8b4568" jobID:@"54d76bd496d9aece6f8b4570" withBlock:^(oprationResultModel *oprationResultModel) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (![oprationResultModel.getStatus intValue]==0) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络请求失败" message:@"请检查您的网络是否畅通" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];

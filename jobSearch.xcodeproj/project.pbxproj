@@ -132,6 +132,10 @@
 		3B9236541A67FAFA00347D9C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B9236531A67FAFA00347D9C /* Images.xcassets */; };
 		3B9236571A67FAFA00347D9C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B9236551A67FAFA00347D9C /* LaunchScreen.xib */; };
 		3B9236631A67FAFA00347D9C /* jobSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9236621A67FAFA00347D9C /* jobSearchTests.m */; };
+		3BB0F94B1A875F6000BC00C4 /* annotation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BB0F9481A875F6000BC00C4 /* annotation@2x.png */; };
+		3BB0F94C1A875F6000BC00C4 /* annotation@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BB0F9491A875F6000BC00C4 /* annotation@3x.png */; };
+		3BB0F94D1A875F6000BC00C4 /* annotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BB0F94A1A875F6000BC00C4 /* annotation.png */; };
+		3BB0F9531A87645F00BC00C4 /* CustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB0F9521A87645F00BC00C4 /* CustomAnnotationView.m */; };
 		3BC051D01A70DE340099A2DF /* MLMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC051CE1A70DE340099A2DF /* MLMessageVC.m */; };
 		3BC051D11A70DE340099A2DF /* MLMessageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BC051CF1A70DE340099A2DF /* MLMessageVC.xib */; };
 		3BC051D51A70DEC20099A2DF /* MLCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC051D31A70DEC20099A2DF /* MLCell2.m */; };
@@ -487,6 +491,11 @@
 		3B92365C1A67FAFA00347D9C /* jobSearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jobSearchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B9236611A67FAFA00347D9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B9236621A67FAFA00347D9C /* jobSearchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jobSearchTests.m; sourceTree = "<group>"; };
+		3BB0F9481A875F6000BC00C4 /* annotation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "annotation@2x.png"; path = "../icon/annotation@2x.png"; sourceTree = "<group>"; };
+		3BB0F9491A875F6000BC00C4 /* annotation@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "annotation@3x.png"; path = "../icon/annotation@3x.png"; sourceTree = "<group>"; };
+		3BB0F94A1A875F6000BC00C4 /* annotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = annotation.png; path = ../icon/annotation.png; sourceTree = "<group>"; };
+		3BB0F9511A87645F00BC00C4 /* CustomAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotationView.h; sourceTree = "<group>"; };
+		3BB0F9521A87645F00BC00C4 /* CustomAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotationView.m; sourceTree = "<group>"; };
 		3BC051CD1A70DE340099A2DF /* MLMessageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLMessageVC.h; sourceTree = "<group>"; };
 		3BC051CE1A70DE340099A2DF /* MLMessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLMessageVC.m; sourceTree = "<group>"; };
 		3BC051CF1A70DE340099A2DF /* MLMessageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLMessageVC.xib; sourceTree = "<group>"; };
@@ -765,6 +774,8 @@
 				3B0785291A6A838800ACD76C /* MAMapKit.framework */,
 				3B0785251A6A838100ACD76C /* AMap.bundle */,
 				3B0785261A6A838100ACD76C /* AMapSearchKit.framework */,
+				3BB0F9511A87645F00BC00C4 /* CustomAnnotationView.h */,
+				3BB0F9521A87645F00BC00C4 /* CustomAnnotationView.m */,
 			);
 			name = MapKit;
 			sourceTree = "<group>";
@@ -1076,6 +1087,9 @@
 		3BC051DD1A70EFDC0099A2DF /* image */ = {
 			isa = PBXGroup;
 			children = (
+				3BB0F9481A875F6000BC00C4 /* annotation@2x.png */,
+				3BB0F9491A875F6000BC00C4 /* annotation@3x.png */,
+				3BB0F94A1A875F6000BC00C4 /* annotation.png */,
 				3BD4DCB41A77D88C00B061D0 /* right.png */,
 				3BD4DCB51A77D88C00B061D0 /* wrong.png */,
 				3BD4DC901A77D38100B061D0 /* agreeInvite.png */,
@@ -1687,6 +1701,7 @@
 				3BC8AE131A73605E00417741 /* cellBackground1@3x.png in Resources */,
 				3BD4DC9B1A77D38100B061D0 /* agreeInvite@3x.png in Resources */,
 				3B07851E1A6A6F9500ACD76C /* icon_location@3x.png in Resources */,
+				3BB0F94C1A875F6000BC00C4 /* annotation@3x.png in Resources */,
 				3B313DC41A71EBAC002FE8B3 /* target@2x.png in Resources */,
 				3BD4DC251A77C4CD00B061D0 /* radio_unchecked.png in Resources */,
 				3BC051EA1A70F5560099A2DF /* userPassword@2x.png in Resources */,
@@ -1736,6 +1751,7 @@
 				3BC8AE061A735E1700417741 /* percent@3x.png in Resources */,
 				3B1439741A7B6EEE0062368E /* MLMatchVC.xib in Resources */,
 				3BD4DC6C1A77C50600B061D0 /* resume_img.png in Resources */,
+				3BB0F94B1A875F6000BC00C4 /* annotation@2x.png in Resources */,
 				3B313DAB1A71EA70002FE8B3 /* location.png in Resources */,
 				3B14397C1A7B6F010062368E /* MLLoginVC.xib in Resources */,
 				3B313E1A1A72A6C1002FE8B3 /* notice@2x.png in Resources */,
@@ -1770,6 +1786,7 @@
 				3B9236521A67FAFA00347D9C /* Main.storyboard in Resources */,
 				3BC8ADEE1A73543100417741 /* export@3x.png in Resources */,
 				3BD4DC731A77C50600B061D0 /* resume_1.png in Resources */,
+				3BB0F94D1A875F6000BC00C4 /* annotation.png in Resources */,
 				3BC052041A714B580099A2DF /* refuse.png in Resources */,
 				3BD4DC821A77C50600B061D0 /* resume_add.png in Resources */,
 				3B313DCB1A71EBFA002FE8B3 /* catagory@3x.png in Resources */,
@@ -1895,6 +1912,7 @@
 				3B176BAE1A6BDA7D0012A350 /* jobDetailVC.m in Sources */,
 				B77578CC1A7A94B900660BB7 /* PBJVisionUtilities.m in Sources */,
 				3BCEA0D31A8366440005F080 /* baseJobModel.m in Sources */,
+				3BB0F9531A87645F00BC00C4 /* CustomAnnotationView.m in Sources */,
 				3BD4DC0D1A777F8900B061D0 /* MLMyCollection.m in Sources */,
 				3B313DCE1A722771002FE8B3 /* MLNavigation.m in Sources */,
 				3B0785391A6A851900ACD76C /* MLMapView.m in Sources */,

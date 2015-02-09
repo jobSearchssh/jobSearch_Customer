@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2ADC126988BE6A3B5DA6459F"
+               BlueprintIdentifier = "F8B9A22F23967CCEC23C5286"
                BuildableName = "libPods-jobSearch-AFNetworking.a"
                BlueprintName = "Pods-jobSearch-AFNetworking"
                ReferencedContainer = "container:Pods.xcodeproj">

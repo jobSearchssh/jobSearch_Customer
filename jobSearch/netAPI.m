@@ -310,9 +310,6 @@
     }];
 }
 
-
-
-
 #pragma base API
 //Testget
 +(void)testAPIGetTest:(id)target action:(SEL)theAction getInfo:(NSData *)getInfo{

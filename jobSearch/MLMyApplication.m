@@ -76,7 +76,7 @@ static  MLMyApplication *thisVC=nil;
         [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
         firstLoad=NO;
     }
-    [netAPI getApplyJobs:@"54d3919296d9aeeb5a8b4567" start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+    [netAPI getApplyJobs:@"54d76bd496d9aece6f8b4568" start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
         [self headHandler:jobListModel];
     }];
 }
@@ -84,7 +84,7 @@ static  MLMyApplication *thisVC=nil;
 - (void)footRefreshData{
     footerRefreshing=YES;
     
-    [netAPI getApplyJobs:@"54d3919296d9aeeb5a8b4567" start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+    [netAPI getApplyJobs:@"54d76bd496d9aece6f8b4568" start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
         [self footHandler:jobListModel];
     }];
 }
@@ -292,10 +292,12 @@ static  MLMyApplication *thisVC=nil;
 {
     switch (index) {
         case 0:
-        {   NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+        {
+            NSIndexPath *cellIndexPath = [_tableView indexPathForCell:cell];
             
-            //[_testArray[cellIndexPath.section] removeObjectAtIndex:cellIndexPath.row];
-            [self.tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            [recordArray removeObjectAtIndex:[cellIndexPath row]];
+            cellNum=[recordArray count];
+            [_tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
             
             break;
         }

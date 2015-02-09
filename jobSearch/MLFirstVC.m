@@ -21,7 +21,7 @@
 #import "AJLocationManager.h"
 #import <QiniuSDK.h>
 
-@interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate,finishFilterDelegate,UINavigationControllerDelegate>
+@interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate,finishFilterDelegate,UINavigationControllerDelegate,showDetailDelegate>
 {
     NSInteger cellNum;
     NSInteger sectionNum;
@@ -411,20 +411,37 @@ static  MLFirstVC *thisVC=nil;
     if (!mapDisplaying) {
         if (!mapView) {
             mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-113)];
+            mapView.showDetailDelegate=self;
             mapView.alpha=0.0f;
             [self.view addSubview:mapView];
         }
         mapDisplaying=YES;
+        [self addannotations];
         [UIView animateWithDuration:0.4 animations:^{
             mapView.alpha=1.0f;
         }];
     }else {
         [UIView animateWithDuration:0.4 animations:^{
             mapView.alpha=0.0f;
+            [mapView removeAllAnnotations];
         }];
         mapDisplaying=NO;
     }
 }
+
+- (void)addannotations{
+    if ([recordArray count]>0) {
+        for (int i=0;i<[recordArray count]-1;i++){
+            
+            jobModel *jm=[recordArray objectAtIndex:i];
+            
+            NSArray *arr=jm.getjobWorkPlaceGeoPoint;
+            
+            [mapView addAnnotation:arr Title:jm.getjobTitle tag:i];
+        }
+    }
+}
+
 - (void)showMessage{
     MLMessageVC *messageVC=[[MLMessageVC alloc]init];
     messageVC.title=@"消息";
@@ -436,6 +453,21 @@ static  MLFirstVC *thisVC=nil;
     MLFilterVC *filterVC=[[MLFilterVC alloc]init];
     filterVC.filterDelegate=self;
     [self.navigationController pushViewController:filterVC animated:YES];
+}
+
+- (void)showDetail:(NSInteger)tag{
+    jobDetailVC *detailVC=[[jobDetailVC alloc]init];
+    if ([recordArray objectAtIndex:tag]) {
+        detailVC.jobModel=[recordArray objectAtIndex:tag];
+    }
+    
+    detailVC.buttonTitle=@"一键申请";
+    detailVC.hidesBottomBarWhenPushed=YES;
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    backItem.title = @"";
+    self.navigationItem.backBarButtonItem = backItem;
+    
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 //*********************ActionSheet********************//

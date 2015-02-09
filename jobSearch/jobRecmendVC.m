@@ -121,7 +121,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         [self updateConstraints];
         
-        [mapView addAnnotation:self.jobModel.getjobWorkPlaceGeoPoint];
+        //[mapView addAnnotation:self.jobModel.getjobWorkPlaceGeoPoint];
     }
 }
 
