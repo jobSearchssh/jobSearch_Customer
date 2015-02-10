@@ -1,19 +1,19 @@
 //
-//  userReturnModel.m
+//  jobApplyModel.m
 //  jobSearch
 //
-//  Created by 田原 on 15/2/7.
+//  Created by 田原 on 15/2/9.
 //  Copyright (c) 2015年 麻辣工作室. All rights reserved.
 //
 
-#import "userReturnModel.h"
+#import "jobApplyModel.h"
 
-@implementation userReturnModel
--(userReturnModel *)initWithData:(NSData *)mainData{
+@implementation jobApplyModel
+-(jobApplyModel *)initWithData:(NSData *)mainData{
     self = [super init];
     if (self) {
         NSString *receiveStr = [[NSString alloc]initWithData:mainData encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",receiveStr);
+//        NSLog(@"%@",receiveStr);
         NSError *error;
         NSData* aData = [receiveStr dataUsingEncoding: NSASCIIStringEncoding];
         NSDictionary *a = Nil;
@@ -29,29 +29,40 @@
             @try {
                 status = [a objectForKey:@"status"];
                 info = [a objectForKey:@"info"];
-                user_id = [a objectForKey:@"datas"];
+                @try {
+                    NSDictionary *datas = [a objectForKey:@"datas"];
+                    if (datas != Nil) {
+                        apply_id = [datas objectForKey:@"apply_id"];
+                        recieve_id = [datas objectForKey:@"recieve_id"];
+                    }
+                }
+                @catch (NSException *exception) {
+                    
+                }
             }@catch (NSException *exception) {
                 flag = false;
             }
         }
         if (!flag) {
-            status = [NSNumber numberWithInt:STATIS_NO];
+            status = [NSNumber numberWithInt:BASE_FAILED];
             info = @"解析错误,请重新尝试";
-            user_id = @"-1";
         }
     }
     return self;
 }
--(userReturnModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error usrID:(NSString *)defaultID{
+-(jobApplyModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error{
     self = [super init];
     if (self) {
         status = getStatus;
         info = error;
-        user_id = defaultID;
     }
     return self;
 }
--(NSString *)getUserID{
-    return user_id;
+-(NSString *)getapply_id{
+    return apply_id;
 }
+-(NSString *)getrecieve_id{
+    return recieve_id;
+}
+
 @end

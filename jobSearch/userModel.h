@@ -39,6 +39,7 @@
     NSString *beiyong2;
     NSString *beiyong3;
     NSNumber *beiyong4;
+    NSString *ImageFileURL;
 }
 
 -(userModel *)initWithData:(NSData *)mainData;
@@ -113,6 +114,9 @@
 
 -(geoModel *)getuserLocationGeo;
 -(void)setuserLocationGeo:(geoModel *)value;
+
+-(NSString *)getImageFileURL;
+-(void)setImageFileURL:(NSString *)value;
 
 
 @end

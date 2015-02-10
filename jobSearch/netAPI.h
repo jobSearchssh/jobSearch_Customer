@@ -17,6 +17,8 @@
 #import "oprationResultModel.h"
 #import "userReturnModel.h"
 #import "userModel.h"
+#import "messageListModel.h"
+#import "jobApplyModel.h"
 
 @interface netAPI : NSObject
 
@@ -24,9 +26,11 @@ typedef void (^returnBlock)(URLReturnModel *returnModel);
 typedef void (^loginReturnBlock)(loginModel *loginModel);
 typedef void (^registerReturnBlock)(registerModel *registerModel);
 typedef void (^jobListReturnBlock)(jobListModel *jobListModel);
+typedef void (^jobApplyReturnBlock)(jobApplyModel *jobApplyModel);
 typedef void (^oprationReturnBlock)(oprationResultModel *oprationResultModel);
 typedef void (^userReturnBlock)(userReturnModel *userReturnModel);
 typedef void (^userBlock)(userModel *userModel);
+typedef void (^messageListReturnBlock)(messageListModel *messageListModel);
 
 #define STATIS_OK 0
 #define STATIS_NO 1
@@ -78,6 +82,10 @@ typedef void (^userBlock)(userModel *userModel);
 //用户id，回调block
 +(void)getNewestJobs:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobListReturnBlock)newestJobListBlock;
 
+//精灵匹配
+//用户id，回调block
++(void)queryJingLingMatch:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobListReturnBlock)newestJobListBlock;
+
 //申请的兼职信息
 //用户id，回调block
 +(void)getApplyJobs:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobListReturnBlock)applyJobListBlock;
@@ -92,13 +100,22 @@ typedef void (^userBlock)(userModel *userModel);
 
 //申请该兼职
 //用户id，jobid，回调block
-+(void)applyTheJob:(NSString *)usrID jobID:(NSString *)jobID withBlock:(oprationReturnBlock)oprationReturnBlock;
++(void)applyTheJob:(NSString *)usrID jobID:(NSString *)jobID withBlock:(jobApplyReturnBlock)applyReturnBlock;
 
 //编辑用户简历
 +(void)editUserDetail:(userModel *)usr withBlock:(userReturnBlock)userReturnBlock;
 
 //获取用户简历
 +(void)getUserDetail:(NSString *)usrid withBlock:(userBlock)userBlock;
+
+//接受企业邀请
++(void)acceptedInvite:(NSString *)invite_id withBlock:(oprationReturnBlock)oprationReturnBlock;
+
+//拒绝企业邀请
++(void)refusedInvite:(NSString *)invite_id withBlock:(oprationReturnBlock)oprationReturnBlock;
+
+//用户消息列表
++(void)getMessageList:(NSString *)usrID start:(int)start length:(int)length withBlock:(messageListReturnBlock)messageListBlock;
 
 +(void)test;
 

@@ -14,22 +14,22 @@
     self = [super init];
     if (self) {
         NSString *receiveStr = [[NSString alloc]initWithData:mainData encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",receiveStr);
+//        NSLog(@"%@",receiveStr);
         NSError *error;
         NSData* aData = [receiveStr dataUsingEncoding: NSASCIIStringEncoding];
-        NSDictionary *a = Nil;
+        NSDictionary *aDicMain = Nil;
         BOOL flag = TRUE;
         @try {
-            a = [NSJSONSerialization JSONObjectWithData:aData options:NSJSONReadingMutableLeaves error:&error];
+            aDicMain = [NSJSONSerialization JSONObjectWithData:aData options:NSJSONReadingMutableLeaves error:&error];
         }
         @catch (NSException *exception) {
-            a = Nil;
+            aDicMain = Nil;
             flag = false;
         }
         if (flag) {
             @try {
-                status = [a objectForKey:@"status"];
-                info = [a objectForKey:@"info"];
+                status = [aDicMain objectForKey:@"status"];
+                info = [aDicMain objectForKey:@"info"];
             }@catch (NSException *exception) {
                 flag = false;
             }
@@ -38,7 +38,7 @@
             do{
                 NSDictionary *dictionary = nil;
                 @try {
-                    dictionary = [a objectForKey:@"datas"];
+                    dictionary = [aDicMain objectForKey:@"datas"];
                 }
                 @catch (NSException *exception) {
                     NSLog(@"datas 解析不成功");
@@ -52,32 +52,39 @@
                 }
                 
                 @try {
-                    job_user_id = [a objectForKey:@"job_user_id"];
-                    userName = [a objectForKey:@"userName"];
-                    userProvince = [a objectForKey:@"userProvince"];
-                    userDistrict = [a objectForKey:@"userDistrict"];
-                    userCity = [a objectForKey:@"userCity"];
-                    userAddressDetail = [a objectForKey:@"userAddressDetail"];
-                    userSchool = [a objectForKey:@"userSchool"];
-                    userIntroduction = [a objectForKey:@"userIntroduction"];
-                    userExperience = [a objectForKey:@"userExperience"];
-                    userPhone = [a objectForKey:@"userPhone"];
-                    userEmail = [a objectForKey:@"userEmail"];
-                    userVideoURL = [a objectForKey:@"userVideoURL"];
-                    beiyong1 = [a objectForKey:@"beiyong1"];
-                    beiyong2 = [a objectForKey:@"beiyong2"];
-                    beiyong3 = [a objectForKey:@"beiyong3"];
-                    beiyong4 = [a objectForKey:@"beiyong4"];
-                    userGender = [a objectForKey:@"userGender"];
-                    NSString *tempstring = [a objectForKey:@"userBirthday"];
-                    userBirthday = [DateUtil dateFromString:tempstring];
-                    userDegree = [a objectForKey:@"userDegree"];
-                    userHopeJobType = [a objectForKey:@"userHopeJobType"];
-                    userFreeTime = [a objectForKey:@"userFreeTime"];
-                    userHopeSettlement = [a objectForKey:@"userHopeSettlement"];
-                    userInfoComplete = [a objectForKey:@"userInfoComplete"];
-                    NSArray *temparray = [a objectForKey:@"userLocationGeo"];
-                    if (temparray != Nil && temparray.count == 2) {
+                    job_user_id = [dictionary objectForKey:@"job_user_id"];
+                    userName = [dictionary objectForKey:@"userName"];
+                    userProvince = [dictionary objectForKey:@"userProvince"];
+                    userDistrict = [dictionary objectForKey:@"userDistrict"];
+                    userCity = [dictionary objectForKey:@"userCity"];
+                    userAddressDetail = [dictionary objectForKey:@"userAddressDetail"];
+                    userSchool = [dictionary objectForKey:@"userSchool"];
+                    userIntroduction = [dictionary objectForKey:@"userIntroduction"];
+                    userExperience = [dictionary objectForKey:@"userExperience"];
+                    userPhone = [dictionary objectForKey:@"userPhone"];
+                    userEmail = [dictionary objectForKey:@"userEmail"];
+                    userVideoURL = [dictionary objectForKey:@"userVideoURL"];
+                    beiyong1 = [dictionary objectForKey:@"beiyong1"];
+                    beiyong2 = [dictionary objectForKey:@"beiyong2"];
+                    beiyong3 = [dictionary objectForKey:@"beiyong3"];
+                    beiyong4 = [dictionary objectForKey:@"beiyong4"];
+                    userGender = [dictionary objectForKey:@"userGender"];
+                    NSString *tempstring = [dictionary objectForKey:@"userBirthday"];
+                    @try {
+                        if (tempstring !=Nil) {
+                            userBirthday = [DateUtil BirthdateFromString:tempstring];
+                        }
+                    }
+                    @catch (NSException *exception) {
+                        
+                    }
+                    userDegree = [dictionary objectForKey:@"userDegree"];
+                    userHopeJobType = [dictionary objectForKey:@"userHopeJobType"];
+                    userFreeTime = [dictionary objectForKey:@"userFreeTime"];
+                    userHopeSettlement = [dictionary objectForKey:@"userHopeSettlement"];
+                    userInfoComplete = [dictionary objectForKey:@"userInfoComplete"];
+                    NSArray *temparray = [dictionary objectForKey:@"userLocationGeo"];
+                    if (temparray != Nil && [temparray count] == 2) {
                         NSNumber *lon = [temparray objectAtIndex:0];
                         NSNumber *lat = [temparray objectAtIndex:1];
                         userLocationGeo = [[geoModel alloc]initWith:[lon doubleValue] lat:[lat doubleValue]];
@@ -265,6 +272,13 @@
     userLocationGeo = value;
 }
 
+-(NSString *)getImageFileURL{
+    return ImageFileURL;
+}
+-(void)setImageFileURL:(NSString *)value{
+    ImageFileURL = value;
+}
+
 
 -(NSString *)getBaseString{
     NSMutableString *baseString = [[NSMutableString alloc]initWithFormat:@"job_user_id=%@",job_user_id];
@@ -325,12 +339,16 @@
     if (beiyong3 != Nil) {
         [baseString appendFormat:@"&beiyong3=%@",beiyong3];
     }
+    if (ImageFileURL != Nil) {
+        [baseString appendFormat:@"&ImageFileURL=%@",ImageFileURL];
+    }
     if (userLocationGeo !=Nil) {
-        NSString *geoPoint = [NSString stringWithFormat:@"\"%f,%f\"",[userLocationGeo getLon],[userLocationGeo getLat]];
+        NSString *geoPoint = [NSString stringWithFormat:@"%f,%f",[userLocationGeo getLon],[userLocationGeo getLat]];
         [baseString appendFormat:@"&userLocationGeo=%@",geoPoint];
     }
+    
     if (userHopeJobType !=Nil) {
-        NSMutableString *getType = [[NSMutableString alloc]initWithFormat:@"\""];
+        NSMutableString *getType = [[NSMutableString alloc]initWithFormat:@""];
         for (int index = 0; index < [userHopeJobType count] ; index++ ) {
             NSNumber *number = [userHopeJobType objectAtIndex:index];
             [getType appendFormat:@"%d",number.intValue];
@@ -338,12 +356,12 @@
                 [getType appendFormat:@","];
             }
         }
-        [getType appendFormat:@"\""];
+//        [getType appendFormat:@"\""];
         [baseString appendFormat:@"&userHopeJobType=%@",getType];
     }
     
     if (userFreeTime !=Nil) {
-        NSMutableString *temp = [[NSMutableString alloc]initWithFormat:@"\""];
+        NSMutableString *temp = [[NSMutableString alloc]initWithFormat:@""];
         for (int index = 0; index < [userFreeTime count] ; index++ ) {
             NSNumber *number = [userFreeTime objectAtIndex:index];
             [temp appendFormat:@"%d",number.intValue];
@@ -351,12 +369,12 @@
                 [temp appendFormat:@","];
             }
         }
-        [temp appendFormat:@"\""];
+//        [temp appendFormat:@"\""];
         [baseString appendFormat:@"&userFreeTime=%@",temp];
     }
     
     if (userHopeSettlement !=Nil) {
-        NSMutableString *temp = [[NSMutableString alloc]initWithFormat:@"\""];
+        NSMutableString *temp = [[NSMutableString alloc]initWithFormat:@""];
         for (int index = 0; index < [userHopeSettlement count] ; index++ ) {
             NSNumber *number = [userHopeSettlement objectAtIndex:index];
             [temp appendFormat:@"%d",number.intValue];
@@ -364,7 +382,7 @@
                 [temp appendFormat:@","];
             }
         }
-        [temp appendFormat:@"\""];
+//        [temp appendFormat:@"\""];
         [baseString appendFormat:@"&userHopeSettlement=%@",temp];
     }
     
