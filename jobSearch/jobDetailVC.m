@@ -13,6 +13,8 @@
 #import "freeselectViewCell.h"
 #import "netAPI.h"
 
+static NSString *userId = @"54d76bd496d9aece6f8b4568";
+
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 @interface jobDetailVC ()<UICollectionViewDataSource,UICollectionViewDelegate>
@@ -72,10 +74,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSLog(@"%@",self.jobModel.getjobID);
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [netAPI applyTheJob:@"54d76bd496d9aece6f8b4568" jobID:@"54d76bd496d9aece6f8b4570" withBlock:^(oprationResultModel *oprationResultModel) {
+    [netAPI applyTheJob:userId jobID:self.jobModel.getjobID withBlock:^(oprationResultModel *oprationResultModel) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (![oprationResultModel.getStatus intValue]==0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络请求失败" message:@"请检查您的网络是否畅通" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            NSString *err=oprationResultModel.getInfo;
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络请求失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
         }
         else{
@@ -84,7 +88,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
     }];
 }
-
 
 - (void)viewDidAppear:(BOOL)animated{
     
@@ -116,9 +119,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     for (int index = 0; index<21; index++) {
         selectFreeData[index] = FALSE;
     }
-    selectFreeData[3] = YES;
-    selectFreeData[5] = YES;
-    selectFreeData[7] = YES;
+    for (id t in self.jobModel.getjobWorkTime) {
+        if ([t intValue]>0) {
+            selectFreeData[[t intValue] ]=YES;
+        }
+    }
+
     self.selectfreeCollectionOutlet.delegate = self;
     self.selectfreeCollectionOutlet.dataSource = self;
     UINib *niblogin = [UINib nibWithNibName:selectFreecellIdentifier bundle:nil];
@@ -148,7 +154,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.jobTitleLabel.text=self.jobModel.getjobTitle;
         self.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@%@",self.jobModel.getjobWorkPlaceCity,self.jobModel.getjobWorkPlaceDistrict,self.jobModel.getjobWorkAddressDetail];
         
-        self.jobDistanceLabel.text=[NSString stringWithFormat:@"%.1f千米",[self getDistance:self.jobModel.getjobWorkPlaceGeoPoint]];
+        self.jobDistanceLabel.text=[NSString stringWithFormat:@"%.1f千米",[jobModel getDistance:self.jobModel.getjobWorkPlaceGeoPoint]];
         
         self.jobPublishTimeLabel.text=[dateFormatter stringFromDate:self.jobModel.getcreated_at];
         self.jobWorkPeriodLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:self.jobModel.getjobBeginTime],[dateFormatter stringFromDate:self.jobModel.getjobEndTime]];
@@ -158,49 +164,53 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         NSString *settlement;
         NSString *str=[NSString stringWithFormat:@"%@",self.jobModel.getjobSettlementWay];
 
-        if ([str isEqualToString:@"1"])
+        if ([str isEqualToString:@"0"])
             settlement=@"日";
-        else if ([str isEqualToString:@"2"])
+        else if ([str isEqualToString:@"1"])
             settlement=@"月";
-        else if ([str isEqualToString:@"3"])
+        else if ([str isEqualToString:@"2"])
             settlement=@"项目";
         
         self.jobSalaryLabel.text=[NSString stringWithFormat:@"%@元/%@",self.jobModel.getjobSalaryRange,settlement];
 
         self.jobDescribeLabel.text=[NSString stringWithFormat:@"工作描述：%@",self.jobModel.getjobIntroduction];
         
-        //NSString *gender=[NSString stringWithFormat:@"性别要求：%@",self.jobModel.getjobGender];
         
-        NSString *degree=[NSString stringWithFormat:@"学历要求：%@",self.jobModel.getjobDegreeReq];
-        NSString *age=[NSString stringWithFormat:@"年龄要求：%@——%@",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
-        NSString *height=[NSString stringWithFormat:@"年龄要求：%@——%@",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
-        NSString *other=@"";
-        self.jobRequireLabel.text=[NSString stringWithFormat:@"%@\n%@\n%@\n%@",degree,age,height,other];
+        NSString *gender;
+        if ([_jobModel.getjobGenderReq isEqualToString:@"0"]) {
+            gender=@"性别要求：不限";
+        }else if ([_jobModel.getjobGenderReq isEqualToString:@"1"]){
+            gender=@"性别要求：男";
+        }else if ([_jobModel.getjobGenderReq isEqualToString:@"2"]){
+            gender=@"性别要求：女";
+        }
+        
+        NSString *degree;
+        NSLog(@"%@",_jobModel.getjobDegreeReq);
+        
+        if ([_jobModel.getjobDegreeReq intValue]==1){
+            degree=@"学历要求：初中";
+        }else if ([_jobModel.getjobDegreeReq intValue]==2){
+            degree=@"学历要求：高中";
+        }else if ([_jobModel.getjobDegreeReq intValue]==3){
+            degree=@"学历要求：大专";
+        }else if ([_jobModel.getjobDegreeReq intValue]==4){
+            degree=@"学历要求：本科";
+        }else if ([_jobModel.getjobDegreeReq intValue]==5){
+            degree=@"学历要求：硕士";
+        }else if ([_jobModel.getjobDegreeReq intValue]==6){
+            degree=@"学历要求：博士及以上";
+        }
+
+        NSString *age=[NSString stringWithFormat:@"年龄要求：%@—%@岁",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
+        NSString *height=[NSString stringWithFormat:@"身高要求：%@—%@cm",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
+        self.jobRequireLabel.text=[NSString stringWithFormat:@"%@\n%@\n%@",degree,age,height];
         
         [self updateConstraints];
         
         [mapView addAnnotation:self.jobModel.getjobWorkPlaceGeoPoint Title:self.jobModel.getjobTitle tag:0];
     }
 }
-
-- (float)getDistance:(NSArray*)p1{
-    
-    float _distance=0.0f;
-    
-    if ([p1 count]==2) {
-        MAMapPoint point1=MAMapPointForCoordinate(CLLocationCoordinate2DMake([[p1 objectAtIndex:1] floatValue], [[p1 objectAtIndex:0] floatValue]));
-        
-        NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
-        CGPoint p2=CGPointFromString([mySettingData objectForKey:@"currentCoordinate"]);
-        
-        MAMapPoint point2=MAMapPointForCoordinate(CLLocationCoordinate2DMake(p2.y,p2.x));
-        
-        _distance=MAMetersBetweenMapPoints(point1, point2);
-    }
-    
-    return _distance;
-}
-
 
 - (void)shareJob{
     
@@ -211,10 +221,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSLog(@"%@",self.jobModel.getjobID);
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [netAPI saveTheJob:@"54d76bd496d9aece6f8b4568" jobID:@"54d76bd496d9aece6f8b4570" withBlock:^(oprationResultModel *oprationResultModel) {
+    [netAPI saveTheJob:userId jobID:self.jobModel.getjobID withBlock:^(oprationResultModel *oprationResultModel) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (![oprationResultModel.getStatus intValue]==0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络请求失败" message:@"请检查您的网络是否畅通" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            NSString *err=oprationResultModel.getInfo;
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络请求失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
         }
         else{

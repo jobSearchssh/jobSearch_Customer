@@ -67,7 +67,7 @@
         UIButton *btn=[[UIButton alloc]initWithFrame:annotationView.frame];
         btn.tag=nowTag;
         
-        [btn setImage:[UIImage imageNamed:@"arrow_right"] forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:@"mapDetail"] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(showDetails:) forControlEvents:UIControlEventTouchUpInside];
         annotationView.rightCalloutAccessoryView=btn;
         

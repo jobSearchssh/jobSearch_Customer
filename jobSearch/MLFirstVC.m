@@ -36,6 +36,8 @@
     BOOL headerRefreshing;
     BOOL footerRefreshing;
     
+    BOOL searchViewDisplaying;
+    
     AMapSearchAPI *search;
     
     //页数
@@ -50,6 +52,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UITabBar *tabbar;
+@property (weak, nonatomic) IBOutlet UITabBarItem *mapItem;
 
 @end
 
@@ -83,6 +86,7 @@ static  MLFirstVC *thisVC=nil;
     
     searchView = [[NiftySearchView alloc] initWithFrame:CGRectMake(0, -76, [[UIScreen mainScreen] bounds].size.width, 76)];
     searchView.delegate = self;
+    searchViewDisplaying=NO;
     [_tableView addSubview:searchView];
     searchView.alpha=0.0f;
     self.navigationController.navigationBar.translucent=NO;
@@ -282,9 +286,7 @@ static  MLFirstVC *thisVC=nil;
                         [netAPI getJobByTypeAndDistance:@"distanceAndType" start:1 length:BASE_SPAN longtitude:locationCoord.longitude latitude:locationCoord.latitude distance:distance jobType:jobTypeArray withBlock:^(jobListModel *jobListModel) {
                             [self headHandler:jobListModel];
                         }];
-//                        [netAPI getJobByJobType:@"type" start:1 length:BASE_SPAN jobType:jobTypeArray withBlock:^(jobListModel *jobListModel) {
-//                            [self headHandler:jobListModel];
-//                        }];
+
                     }
 
                 }
@@ -318,7 +320,9 @@ static  MLFirstVC *thisVC=nil;
     if (footerRefreshing) {
         if (![jobListModel.getStatus intValue]==0) {
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:@"数据请求失败，请稍后再试" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            NSString *err=jobListModel.getInfo;
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
             
         }else{
@@ -402,7 +406,7 @@ static  MLFirstVC *thisVC=nil;
 }
 
 - (void)showMatchInfo{
-    MLMatchVC *matchVC=[MLMatchVC sharedInstance];
+    MLMatchVC *matchVC=[[MLMatchVC alloc] init];
     matchVC.title=@"精灵匹配";
     [self.navigationController pushViewController:matchVC animated:YES];
 }
@@ -420,12 +424,18 @@ static  MLFirstVC *thisVC=nil;
         [UIView animateWithDuration:0.4 animations:^{
             mapView.alpha=1.0f;
         }];
+        [self.mapItem setTitle:@"列表"];
+        [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        self.navigationItem.rightBarButtonItem.enabled=NO;
     }else {
         [UIView animateWithDuration:0.4 animations:^{
             mapView.alpha=0.0f;
             [mapView removeAllAnnotations];
         }];
         mapDisplaying=NO;
+        [self.mapItem setTitle:@"地图"];
+        [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        self.navigationItem.rightBarButtonItem.enabled=YES;
     }
 }
 
@@ -505,12 +515,7 @@ static  MLFirstVC *thisVC=nil;
     } else {
         searchView.startTextField.textColor = [UIColor blackColor];
     }
-    if ([searchView.finishTextField.text isEqualToString:NSLocalizedString(@"Current Location", nil)]) {
-        searchView.finishTextField.textColor = [UIColor blueColor];
-    } else {
-        searchView.finishTextField.textColor = [UIColor blackColor];
-    }
-    
+    searchViewDisplaying=YES;
     CGRect searchBarFrame = searchView.frame;
     searchBarFrame.origin.y = 0;
     [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
@@ -518,7 +523,7 @@ static  MLFirstVC *thisVC=nil;
                          searchView.frame = searchBarFrame;
                      }
                      completion:^(BOOL completion) {
-                         [searchView.startTextField becomeFirstResponder];
+                         [searchView.finishTextField becomeFirstResponder];
                      }];
 }
 
@@ -536,7 +541,6 @@ static  MLFirstVC *thisVC=nil;
 
 - (void)niftySearchViewResigend
 {
-    NSLog(@"resignSearchView");
     [self hideSearchBar:self];
     
     [UIView animateWithDuration:0.4 animations:^{
@@ -544,9 +548,22 @@ static  MLFirstVC *thisVC=nil;
     }];
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    if (searchViewDisplaying) {
+        [self hideSearchBar:self];
+        [UIView animateWithDuration:0.4 animations:^{
+            searchView.alpha=0.0f;
+        }];
+    }
+}
+
+
 - (void)routeButtonClicked:(UITextField *)startTextField finishTextField:(UITextField *)finishTextField
 {
-    NSLog(@"routeButtonClicked");
+    firstLoad=YES;
+    searchType=@"keyword";
+    keyWord=finishTextField.text;
+    [self headRefreshData];
 }
 
 - (IBAction)hideSearchBar:(id)sender
@@ -560,7 +577,7 @@ static  MLFirstVC *thisVC=nil;
                          searchView.frame = searchBarFrame;
                      }
                      completion:^(BOOL completion){
-                         
+                         searchViewDisplaying=NO;
                      }];
 }
 
@@ -602,6 +619,7 @@ static  MLFirstVC *thisVC=nil;
     cell.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@",jobObject.getjobWorkPlaceCity,jobObject.getjobWorkPlaceDistrict];
     cell.jobTimeLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:jobObject.getjobBeginTime],[dateFormatter stringFromDate:jobObject.getjobEndTime]];
     cell.jobDistance.text=[NSString stringWithFormat:@"%.1fKM",[jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint]];
+
     int num=[jobObject.getjobRecruitNum intValue]-[jobObject.getjobHasAccepted intValue];
     cell.jobNumberRemainLabel.text=[NSString stringWithFormat:@"还剩%d人",num];
     cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/天",jobObject.getjobSalaryRange];

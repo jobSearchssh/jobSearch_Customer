@@ -1,16 +1,15 @@
 //
-//  jobsModel.m
+//  messageListModel.m
 //  jobSearch
 //
-//  Created by 田原 on 15/2/1.
+//  Created by 田原 on 15/2/9.
 //  Copyright (c) 2015年 麻辣工作室. All rights reserved.
 //
 
-#import "jobListModel.h"
+#import "messageListModel.h"
 
-@implementation jobListModel
-
--(jobListModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error{
+@implementation messageListModel
+-(messageListModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error{
     self = [super init];
     if (self) {
         status = getStatus;
@@ -19,13 +18,13 @@
     return self;
 }
 
--(jobListModel *)initWithData:(NSData *)mainData{
+-(messageListModel *)initWithData:(NSData *)mainData{
     self = [super init];
     if (self) {
         BOOL flag = TRUE;
         do{
             NSString *receiveStr = [[NSString alloc]initWithData:mainData encoding:NSUTF8StringEncoding];
-//            NSLog(@"%@",receiveStr);
+            NSLog(@"%@",receiveStr);
             NSError *error;
             NSData* aData = [receiveStr dataUsingEncoding: NSASCIIStringEncoding];
             NSDictionary *a = Nil;
@@ -51,12 +50,12 @@
                     break;
                 }
             }
-
+            
             if (flag) {
                 if (status.intValue == BASE_FAILED) {
                     break;
                 }
-                savejobsArray = [[NSMutableArray alloc]init];
+                messageArray = [[NSMutableArray alloc]init];
                 NSArray *jobsJSON = Nil;
                 @try {
                     jobsJSON = [a objectForKey:@"datas"];
@@ -70,9 +69,9 @@
                     @try {
                         for (NSDictionary *dictionary in jobsJSON) {
                             @try {
-                                jobModel *job = [[jobModel alloc]initWithDictionary:dictionary];
-                                if (job != Nil) {
-                                    [savejobsArray addObject:job];
+                                messageModel *message = [[messageModel alloc]initWithDictionary:dictionary];
+                                if (message != Nil) {
+                                    [messageArray addObject:message];
                                 }
                             }
                             @catch (NSException *exception) {
@@ -98,7 +97,8 @@
     return self;
 }
 
--(NSMutableArray *)getJobArray{
-    return savejobsArray;
+-(NSMutableArray *)getMessageArray{
+    return messageArray;
 }
+
 @end

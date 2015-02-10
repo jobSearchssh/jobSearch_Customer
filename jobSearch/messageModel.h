@@ -1,17 +1,17 @@
 //
-//  jobModel.h
+//  messageModel.h
 //  jobSearch
 //
-//  Created by 田原 on 15/2/1.
+//  Created by 田原 on 15/2/9.
 //  Copyright (c) 2015年 麻辣工作室. All rights reserved.
 //
 
-#import "baseJobModel.h"
+#import "baseMessageModel.h"
 #import "DateUtil.h"
 
-@interface jobModel : baseJobModel{
+@interface messageModel : baseMessageModel{
     NSString *jobId;
-//    NSDate *jobBirthdayMonthYear;
+    //    NSDate *jobBirthdayMonthYear;
     NSDate *jobBeginTime;
     NSDate *jobEndTime;
     NSArray *jobWorkTime;
@@ -36,7 +36,7 @@
     NSString *jobEnterpriseIntroduction;
     NSString *jobDegreeReq;
     NSString *jobPhone;
-//    NSString *jobEmail;
+    //    NSString *jobEmail;
     NSDate *created_at;
     NSString *jobContactName;
     NSString *jobEnterpriseImageURL;
@@ -44,10 +44,12 @@
     NSDate * updated_at;
     NSNumber *jobHasAccepted;
     NSNumber *jobHasRejected;
+    NSString *invite_id;
+    NSNumber *inviteStatus;
     NSString *jobGenderReq;
 }
 
--(jobModel *)initWithDictionary:(NSDictionary *)initDictionary;
+-(messageModel *)initWithDictionary:(NSDictionary *)initDictionary;
 //-(NSDate *)getjobBirthdayMonthYear;
 -(NSDate *)getjobBeginTime;
 -(NSDate *)getjobEndTime;
@@ -82,7 +84,9 @@
 -(NSDate *)getupdated_at;
 -(NSNumber*)getjobHasAccepted;
 -(NSNumber*)getjobHasRejected;
--(NSString*)getjobGenderReq;
-+ (float)getDistance:(NSArray*)p1;
+- (NSString*)getjobGenderReq;
+
+-(NSString *)getinvite_id;
+-(NSNumber *)getinviteStatus;
 
 @end
